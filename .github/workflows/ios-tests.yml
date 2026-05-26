@@ -1,0 +1,47 @@
+name: iOS Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ios-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: macos-26
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Resolve Swift packages
+        run: xcodebuild -resolvePackageDependencies -project Debrief.xcodeproj
+
+      - name: Run tests
+        run: |
+          xcodebuild test \
+            -project Debrief.xcodeproj \
+            -scheme Debrief \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            -only-testing:DebriefTests \
+            -resultBundlePath TestResults.xcresult
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ github.run_number }}
+          path: TestResults.xcresult
+          retention-days: 7

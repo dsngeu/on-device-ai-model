@@ -1,0 +1,95 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "iOS: Run on Default Simulator",
+      "type": "shell",
+      "command": "${workspaceFolder}/run-ios.sh",
+      "args": ["sim"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "iOS: Run on Named Simulator",
+      "type": "shell",
+      "command": "${workspaceFolder}/run-ios.sh",
+      "args": ["sim", "${input:simulatorName}"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "iOS: Run on Real Device (Attached)",
+      "type": "shell",
+      "command": "${workspaceFolder}/run-ios.sh",
+      "args": ["device"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "iOS: Run on Named Real Device (Attached)",
+      "type": "shell",
+      "command": "${workspaceFolder}/run-ios.sh",
+      "args": ["device", "${input:deviceName}"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "iOS: List Simulators",
+      "type": "shell",
+      "command": "${workspaceFolder}/run-ios.sh",
+      "args": ["list-sims"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "iOS: List Real Devices",
+      "type": "shell",
+      "command": "${workspaceFolder}/run-ios.sh",
+      "args": ["list-devices"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "simulatorName",
+      "type": "promptString",
+      "description": "Simulator name",
+      "default": "iPhone 17"
+    },
+    {
+      "id": "deviceName",
+      "type": "promptString",
+      "description": "Real device name or identifier",
+      "default": "iPhone"
+    }
+  ]
+}

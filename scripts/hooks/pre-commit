@@ -1,0 +1,37 @@
+#!/bin/bash
+# Pre-commit hook: block commits that log PII fields in Swift files.
+# Install via: bash scripts/setup-hooks.sh
+# Rules: docs/ai-harness/safety-and-hipaa.md
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR | grep '\.swift$')
+
+[ -z "$STAGED" ] && exit 0
+
+# Matches property access of known PII fields inside any Swift logging call.
+# Pattern: logging_call( ... .piiField ... )
+PII_PATTERN='(logger\.log|print\(|NSLog\(|debugPrint\(|dump\().*\.(transcript|liveTranscript|participants|meetingTopic|summary|summaryLines|actionItems|keyDecisions|openQuestions|firstName|lastName|fullName|email|phoneNumber)'
+
+FOUND=0
+
+for FILE in $STAGED; do
+    [ -f "$FILE" ] || continue
+
+    # Check only newly added/changed lines in this commit (not pre-existing lines)
+    MATCHES=$(git diff --cached "$FILE" | grep '^+[^+]' | grep -E "$PII_PATTERN")
+
+    if [ -n "$MATCHES" ]; then
+        echo "❌  PII in log — $FILE"
+        echo "$MATCHES" | sed 's/^+/    /' | head -5
+        FOUND=1
+    fi
+done
+
+if [ $FOUND -eq 1 ]; then
+    echo ""
+    echo "🚫  Commit blocked — PII field detected in a log statement."
+    echo "    Log only anonymized identifiers: recordingID, meetingID, counts, states."
+    echo "    See docs/ai-harness/safety-and-hipaa.md for rules and safe examples."
+    exit 1
+fi
+
+exit 0

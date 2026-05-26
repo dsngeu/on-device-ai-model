@@ -1,0 +1,65 @@
+included:
+  - Debrief
+  - DebriefTests
+
+excluded:
+  - Debrief.xcodeproj
+  - .build
+
+disabled_rules:
+  - trailing_whitespace
+
+opt_in_rules:
+  - empty_count
+  - first_where
+  - closure_spacing
+  - explicit_init
+  - operator_usage_whitespace
+  - sorted_imports
+  - redundant_nil_coalescing
+
+# 300-line hard limit for all types — enforces SwiftUI view decomposition.
+# warning at 275 gives early signal before hitting the wall.
+type_body_length:
+  warning: 275
+  error: 300
+
+# Keep functions focused
+function_body_length:
+  warning: 60
+  error: 80
+
+line_length:
+  warning: 120
+  error: 150
+  ignores_comments: true
+  ignores_urls: true
+
+type_name:
+  min_length: 3
+  max_length: 50
+
+identifier_name:
+  min_length: 2
+  max_length: 50
+  excluded:
+    - id
+    - db
+    - x
+    - y
+
+# HIPAA / PII rules
+# These catch direct property access of known PII fields inside any logging call.
+# Pattern: logging_function( ... .piiField ... )
+custom_rules:
+  no_pii_in_logs:
+    name: "No PII in Logs"
+    regex: '(logger\.log|print|NSLog|debugPrint|Logger\.(debug|info|warning|error|log)|os_log)\s*\([^)]*\.(email|phone|phoneNumber|firstName|lastName|fullName|userID|userId|accountID|participants|displayName)'
+    message: "Privacy: PII field detected in log statement. Use an anonymized identifier (recordingID, meetingID) instead."
+    severity: error
+
+  no_phi_content_in_logs:
+    name: "No PHI Content in Logs"
+    regex: '(logger\.log|print|NSLog|debugPrint|Logger\.(debug|info|warning|error|log)|os_log)\s*\([^)]*\.(transcript|meetingTopic|summary|summaryLines|actionItems|keyDecisions|openQuestions|liveTranscript)'
+    message: "Privacy: Meeting content (transcript, summary, topic) must never be logged. Use a meeting/recording ID only."
+    severity: error

@@ -1,2 +1,8 @@
-# WhisperOnDevice-iOS
-Run OpenAI’s Whisper speech-to-text model fully offline on iOS using whisper.cpp and ggml-base.en.bin or ggml-small.en.bin. Includes audio recording, model integration, and local transcription in Swift.
+# debrief
+On device AI, generate transcripts, and create summaries while keeping all data securely on-device
+
+## CI
+
+The repo includes a GitHub Actions workflow for tests:
+
+- **Tests** — `.github/workflows/ios-tests.yml` · Runs on every push to `main` and on pull requests
