@@ -2,6 +2,19 @@
 
 iOS app that records meetings, transcribes audio, and generates structured AI notes — entirely on-device. No cloud, no accounts, no data leaves the phone.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/home.png" width="200" alt="Home" />
+  <img src="docs/screenshots/recording.png" width="200" alt="Recording" />
+  <img src="docs/screenshots/transcription.png" width="200" alt="Live Transcript" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/note.png" width="200" alt="Meeting Detail" />
+  <img src="docs/screenshots/queue.png" width="200" alt="Processing Queue" />
+  <img src="docs/screenshots/setings.png" width="200" alt="Settings" />
+</p>
+
 ## Features
 
 ### Recording
