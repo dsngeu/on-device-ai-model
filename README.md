@@ -1,6 +1,6 @@
 # Debrief
 
-iOS app that records meetings, transcribes audio, and generates structured AI notes — entirely on-device. No cloud, no accounts, no data leaves the phone.
+iOS app that records meetings, transcribes audio, and generates structured AI notes — powered by local LLMs running entirely on your device. Runs **Qwen 2.5 1.5B** and **Phi-2** on-device via GGUF inference. No cloud, no accounts, no data leaves the phone.
 
 ## Screenshots
 
